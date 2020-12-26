@@ -1,0 +1,48 @@
+*{ 
+    background-color: rgb(90, 88, 88)
+   
+
+}
+.inputText{
+
+    margin-top: 10%;
+    margin-left: 20%;
+}
+.crossText {
+    text-decoration: line-through solid 3px;
+    color:black;
+    
+  }
+  .space{
+      margin-left: 20px;
+  }
+.show{
+    margin-top: 5%;
+    margin-left: 20%;
+    font-family: 'Langar', cursive;
+    font-weight: bold;
+    font-size: 30px;
+
+}
+.listitem{
+
+}
+input{
+
+    border-bottom:2px solid black;
+    border-style: none none solid none;
+    width: 50%;
+    font-family: 'Langar', cursive;
+    font-weight: bold;
+    font-size: 30px;
+}
+button{
+    margin-left: 2%;
+    height: 30px;
+    border-style: none;
+    font-size: 30px;
+    font-weight: bold;
+}
+button:hover{
+    color: black;
+}

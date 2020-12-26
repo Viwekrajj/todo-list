@@ -1,39 +1,91 @@
-import React from 'react';
-import firebase from './firebase';
-import './App.css';
-import Button from '@material-ui/core/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import React, { useState,useEffect } from 'react';
+import './Todo.css'
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      marginTop: theme.spacing(2),
-      marginLeft: theme.spacing(2.5),
+function Todo() {
+    const initialTodos= JSON.parse(window.localStorage.getItem("todos")||
+    "[]")
+    const [todo, setTodo] = useState("");
+    const [todoList, setTodoList] = useState(initialTodos);
 
-     
-    },
-  },
+    useEffect(()=>{
+        window.localStorage.setItem('todos',JSON.stringify(todoList))
+    },[todoList]);
+    const handleChange = (e) => {
+        setTodo(e.target.value);
+    };
 
-}));
+    const handleClick = () => {
 
-export default function Todo({ todo }) {
-  const classes = useStyles();
-  const deleteTodo = () => {
-    const todoRef = firebase.database().ref('Todo').child(todo.id);
-    todoRef.remove();
-  };
-  const completeTodo = () => {
-    const todoRef = firebase.database().ref('Todo').child(todo.id);
-    todoRef.update({
-      complete: !todo.complete,
-    });
-  };
-  return (
-    <div  className={classes.root}>
-      <h1 className={todo.complete ? 'complete' : ''}>{todo.title}</h1>
-      <Button onClick={deleteTodo} variant="contained">Delete</Button>
-      <Button onClick={completeTodo} variant="contained">Complete</Button>
-      
-    </div>
-  );
+        if (todo !== "") {
+            const todoDetails = {
+                id: Math.floor(Math.random() * 1000),
+                value: todo,
+                isCompleted: false,
+            };
+            setTodoList([...todoList, todoDetails]);
+        }
+        
+        
+    };
+
+    const onDelete = (e, id) => {
+        e.preventDefault();
+
+        setTodoList(todoList.filter((t) => t.id !== id));
+    }
+
+    const onComplete = (e, id) => {
+        e.preventDefault();
+
+        const element = todoList.findIndex((elem) => elem.id === id);
+
+
+        const newTodoList = [...todoList];
+
+
+        newTodoList[element] = {
+            ...newTodoList[element],
+            isCompleted: true,
+        };
+
+        setTodoList(newTodoList);
+
+    };
+
+
+    return (
+        <div>
+            <div>
+                <input type="text" className="inputText"
+
+                    onChange={(e) => handleChange(e)}
+                    placeholder="input todo....." />
+                <button onClick={handleClick}>Add</button>
+            </div>
+
+
+
+
+            <div className="show">
+
+                {todoList !== [] ? (
+                    <ul>
+                        {todoList.map((t) => (
+                            <li className={t.isCompleted ? "crossText" : "listitem"}> {t.value}
+                                <button onClick={(e) => onDelete(e, t.id)}><i className="fas fa-trash-alt space"></i></button>
+                               
+                                <button onClick={(e) => onComplete(e, t.id)}><i class="far fa-check-circle"></i></button>
+                            </li>
+                        ))}
+                    </ul>
+
+                ) : null}
+            </div>
+
+
+
+        </div>
+    );
 }
+
+export default Todo
