@@ -13,6 +13,21 @@
   }
 }
 
+.test1{
+  position: absolute;
+  right:330px
+  
+}
+.test2{
+  position: absolute;
+  right:270px
+  
+}
+
+h1{
+  text-align: center;
+  color: rgb(0, 0, 0);
+}
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -35,4 +50,17 @@
   to {
     transform: rotate(360deg);
   }
+}
+@media only screen and (max-width: 600px) {
+  .test1{
+    position: absolute;
+    right:90px
+    
+  }
+  .test2{
+    position: absolute;
+    right:40px
+    
+  }
+ 
 }

@@ -14,8 +14,8 @@ function Todo() {
         setTodo(e.target.value);
     };
 
-    const handleClick = () => {
-
+    const handleClick = (e) => {
+        
         if (todo !== "") {
             const todoDetails = {
                 id: Math.floor(Math.random() * 1000),
@@ -24,7 +24,7 @@ function Todo() {
             };
             setTodoList([...todoList, todoDetails]);
         }
-        
+        console.log("todo",todo);
         
     };
 
@@ -34,7 +34,7 @@ function Todo() {
         setTodoList(todoList.filter((t) => t.id !== id));
     }
 
-    const onComplete = (e, id) => {
+    const onComplete = (e, id,isCompleted) => {
         e.preventDefault();
 
         const element = todoList.findIndex((elem) => elem.id === id);
@@ -42,11 +42,20 @@ function Todo() {
 
         const newTodoList = [...todoList];
 
-
-        newTodoList[element] = {
-            ...newTodoList[element],
-            isCompleted: true,
-        };
+        if(isCompleted!=true)
+        {
+            newTodoList[element] = {
+                ...newTodoList[element],
+                isCompleted: true,
+            };
+        }
+        else
+        {
+            newTodoList[element] = {
+                ...newTodoList[element],
+                isCompleted: false,
+            };
+        }
 
         setTodoList(newTodoList);
 
@@ -55,13 +64,13 @@ function Todo() {
 
     return (
         <div>
-            <div>
+            <form>
                 <input type="text" className="inputText"
 
                     onChange={(e) => handleChange(e)}
                     placeholder="input todo....." />
                 <button onClick={handleClick}>Add</button>
-            </div>
+            </form>
 
 
 
@@ -72,9 +81,9 @@ function Todo() {
                     <ul>
                         {todoList.map((t) => (
                             <li className={t.isCompleted ? "crossText" : "listitem"}> {t.value}
-                                <button onClick={(e) => onDelete(e, t.id)}><i className="fas fa-trash-alt space"></i></button>
+                                <button className="test1" onClick={(e) => onDelete(e, t.id)}><i className="fas fa-trash-alt space"></i></button>
                                
-                                <button onClick={(e) => onComplete(e, t.id)}><i class="far fa-check-circle"></i></button>
+                                <button className="test2" onClick={(e) => onComplete(e, t.id,t.isCompleted)}><i className="far fa-check-circle"></i></button>
                             </li>
                         ))}
                     </ul>
