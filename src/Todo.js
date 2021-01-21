@@ -42,7 +42,7 @@ function Todo() {
 
         const newTodoList = [...todoList];
 
-        if(isCompleted!=true)
+        if(isCompleted!==true)
         {
             newTodoList[element] = {
                 ...newTodoList[element],
